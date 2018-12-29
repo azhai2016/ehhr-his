@@ -63,25 +63,6 @@ export default [{
           title: '数据导出'
         },
         component: () => import('@/view/multilevel/level-2-1.vue')
-      },
-      {
-        path: 'level_2_2',
-        name: 'level_2_2',
-        meta: {
-          access: ['admin'],
-          icon: 'md-funnel',
-          title: '发票查询'
-        },
-        component: () => import('@/view/multilevel/level-2-2.vue')
-      },
-      {
-        path: 'level_2_3',
-        name: 'level_2_3',
-        meta: {
-          icon: 'md-funnel',
-          title: '质检单查询'
-        },
-        component: () => import('@/view/multilevel/level-2-3.vue')
       }
     ]
   },{
@@ -103,23 +84,13 @@ export default [{
         component: () => import('@/view/multilevel/level-3-1.vue')
       },
       {
-        path: 'level_3_2',
-        name: 'level_3_2',
-        meta: {
-          access: ['super_admin'],
-          icon: 'md-funnel',
-          title: '发票查询'
-        },
-        component: () => import('@/view/multilevel/level-2-2.vue')
-      },
-      {
         path: 'level_3_3',
         name: 'level_3_3',
         meta: {
           icon: 'md-funnel',
           title: '质检单查询'
         },
-        component: () => import('@/view/multilevel/level-2-3.vue')
+        component: () => import('@/view/multilevel/level-3-3.vue')
       }
     ]
   },{
@@ -138,7 +109,7 @@ export default [{
           icon: 'md-funnel',
           title: '商品信息对码'
         },
-        component: () => import('@/view/multilevel/level-2-1.vue')
+        component: () => import('@/view/product/level-4-1.vue')
       }
     ]
   },

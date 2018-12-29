@@ -210,7 +210,6 @@ export default {
         },
         responseType: 'json'
       }).then((res) => {
-        console.log(res);
         that.dataCount = parseInt(res.data[1][0]['totalpage']);
         that.data1 = res.data[0];
       }).catch((res) => {

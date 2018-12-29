@@ -16,7 +16,7 @@ import './index.less'
 import '@/assets/icons/iconfont.css'
 import axios from 'axios'
 import qs from 'qs';
-//import cors from 'cors';
+import cors from 'cors';
 
 
 // 实际打包时应该不引入mock
@@ -43,12 +43,12 @@ let bindToGlobal = (obj, key='var') => {
 bindToGlobal(http,'_const'); */
 
 
-/*
+
 Vue.use(cors,({
-   origin: _const.baseUrl,
+   origin: config.baseUrl,
    credentials: true
 }));
-*/
+
 /**
  * @description 注册admin内置插件
  */

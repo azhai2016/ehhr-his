@@ -1,24 +1,13 @@
 <template>
 <div>
   <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
-    <Select v-model="searchKey" class="search-col">
-      <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
-    </Select>
-    <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue" />
+    <Input @on-change="handleClear" clearable placeholder="输入商品名称" class="search-input" v-model="searchValue" />
     <Button @click="handleSearch" class="search-btn">
       <Icon type="search" />&nbsp;&nbsp;搜索</Button>
   </div>
   <Table stripe border size="small" searchable searchPlace="top" ref="selection" :columns="columns4" :data="data1" @on-selection-change="selected">
   </Table>
-
-  <div v-if="selectedcount > 0" class="selectedinfo">选择商品数:<span>{{selectedcount}}</span> 总数量:<span>{{selectedqty}}</span> 总金额:<span>{{selectedje}}</span>
-    <Button :loading="loading" @click="toLoading">
-      <span v-if="!loading">导出选中</span>
-      <span v-else>Loading...</span>
-    </Button>
-  </div>
   <Page :total="dataCount" :page-size="pageSize" show-total class="paging" @on-change="changepage"></Page>
-
 
 </div>
 </template>
@@ -99,23 +88,11 @@
 }
 </style>
 <script>
-import expandRow from '../../components/plans/table-expand.vue';
 export default {
-  components: {
-    expandRow
-  },
   data() {
     return {
       appname: this.$config.appname,
       dataCount: 0,
-      selectedje: 0,
-      selectedqty: 0,
-      selectedcount: 0,
-      // 每页显示多少条
-      /*  ReceiveID,DateReceived,ReceiveLineID,ProductID,
-      MedicineName,ProductStyle,UOM,ProductSpec,CertificateNo,Manufacturer,
-      Lot,GuaranteeDate,ProductionDate,Price,Qty,hsje,jlgg,bzgg,jiansh
-      */
       pageSize: 10,
       page: 1,
       loading: false,
@@ -149,39 +126,24 @@ export default {
           }
         },
         {
-          title: '装箱件数',
+          title: '剂型',
           width: 70,
-          key: 'jiansh'
+          key: 'jixing'
         },
         {
-          title: '发票号',
-          width: 120,
-          key: 'piaohao'
+          title: '商品信息',
+          width: 500,
+          key: 'spinfo'
         },
         {
-          title: '单据编号',
+          title: '单位',
+          width: 100,
+          key: 'dw'
+        },
+        {
+          title: '批准文号',
           width: 140,
-          key: 'ReceiveID'
-        },
-        {
-          title: '品种数',
-          width: 100,
-          key: 'RowsCount'
-        },
-        {
-          title: '日期',
-          width: 100,
-          key: 'DateReceived'
-        },
-        {
-          title: '金额',
-          align: 'right',
-          width: 100,
-          key: 'hsje'
-        },
-        {
-          title: '',
-          width: 1000
+          key: 'pzwh'
         }
       ],
       data1: [],
@@ -200,21 +162,14 @@ export default {
     }
   },
   methods: {
-    reloaddata(){
-        this.loaddata(this.page);
-    },
-    handleSearch(e){
-      this.loaddata(1)
-    },
     loaddata(page) {
       let that = this;
       this.$ajax({
-        url: this.$baseUrl + '/api/plans/' + page, //测试地址
+        url: this.$baseUrl + '/api/product/' + page, //测试地址
         method: 'GET',
         params: {
-          k:this.searchKey,
-          v:this.searchValue,
-          h:'history'
+          n:this.searchKey,
+          v:this.searchValue
         },
         responseType: 'json'
       }).then((res) => {
@@ -224,31 +179,6 @@ export default {
       }).catch((res) => {
         console.log(res);
       });
-    },
-    toLoading() {
-      this.loading = true;
-    },
-    handleSelectAll(status) {
-      this.$refs.selection.selectAll(status);
-    },
-    handleClear(){
-
-    },
-    changepage(index) {
-      this.loaddata(index);
-    },
-    selected(a) {
-      var qty = 0;
-      var je = 0;
-
-      for (var i = 0; i < a.length; i++) {
-        je += parseFloat(a[i].hsje);
-        qty += parseInt(a[i].Qty);
-      }
-
-      this.selectedje = je;
-      this.selectedqty = qty;
-      this.selectedcount = i;
     }
   },
   created() {

@@ -18,7 +18,7 @@
     </Button>
   </div>
   <Page :total="dataCount" :page-size="pageSize" show-total class="paging" @on-change="changepage"></Page>
-
+  
 
 </div>
 </template>

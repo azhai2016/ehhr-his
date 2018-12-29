@@ -27,13 +27,34 @@ export default {
   },
   data () {
     return {
-      inforCardData: [
-        { title: '未处理单据', icon: 'md-person-add', count: 3, color: '#ccc' },
-      ]
+      inforCardData:[]
     }
   },
-  mounted () {
+  mounted (){
+  },
+  methods: {
+    loaddata(page){
+      let that = this;
+      this.$ajax({
+        url: this.$baseUrl + '/api/plans/' + page, //测试地址
+        method: 'GET',
+        params: {
+        },
+        responseType: 'json'
+      }).then((res) => {
+        console.log(res);
+        let totalcount = parseInt(res.data[1][0]['totalpage'])
+        this.inforCardData = [
+          { title: '未处理单据', icon: 'md-bulb', count:totalcount, color: '#17b23a' },
+        ]
+      }).catch((res) => {
+        console.log(res);
+      });
+    }
     //
+  },
+  created(){
+    this.loaddata(1)
   }
 }
 </script>
